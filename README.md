@@ -53,7 +53,9 @@ Step 3: Run the [Jupyter notebook]()
 Step 4: Check the output
 - Since we use the code `data.write.partitionBy("partition").mode("overwrite").parquet("output_dir")` , we should expect the processed data stored in this data structure:
 ```
-output_dir/partition=T/ output_dir/partition=Q/ output_dir/partition=B/
+output_dir/partition=T/ 
+output_dir/partition=Q/ 
+output_dir/partition=B/
 ```
 
 From the Databricks File System (`DBFS`), we should see this:
