@@ -31,23 +31,29 @@ Originally I wanted to use HDInsight cluster and mount with Blob Storage from Az
 # Data Source
 The source data used in this project is randomly generated stock exchange data.
 - Trades: records that indicate transactions of stock shares between broker-dealers. See trade data below.
-[pic]
 
+![Screen Shot 2022-03-10 at 10 25 03 AM](https://user-images.githubusercontent.com/70767722/157694493-524622c5-9f01-4fa1-a279-40b23bb42794.png)
 
 - Quotes: records of updates best bid/ask price for a stock symbol on a certain exchange. See quote data below.
-[pic]
+
+![Screen Shot 2022-03-10 at 10 25 16 AM](https://user-images.githubusercontent.com/70767722/157694537-4177d43e-b25e-42be-8662-c7d7aaf15be1.png)
+
+-After the data ingestion, we will create a `Common Event` dataframe following below schema:
+
+![Screen Shot 2022-03-10 at 10 23 27 AM](https://user-images.githubusercontent.com/70767722/157694121-91984caf-3b82-4e3e-b0d9-b9945b534620.png)
 
 ## Diagram of the data flow
-[pic]
+![Screen Shot 2022-03-10 at 10 21 47 AM](https://user-images.githubusercontent.com/70767722/157693765-9709acf6-424f-4b2a-bef5-18b6cc4c45b9.png)
 
 Step 1: Data Source
-- First, we upload data from folder [data]() using [AzCopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?toc=/azure/storage/blobs/toc.json) 
-- Creates a container then upload the CSV and JSON files using [upload_files.sh]()
+- First, we upload data from folder [data](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/tree/master/data) using [AzCopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?toc=/azure/storage/blobs/toc.json) 
+- Creates a container then upload the CSV and JSON files using [upload_files.sh](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/upload_files.sh)
 
 Step 2: Create Azure Databricks cluster
-[pic]
 
-Step 3: Run the [Jupyter notebook]()
+![Screen Shot 2022-03-10 at 10 12 22 AM](https://user-images.githubusercontent.com/70767722/157693600-46bbe945-7560-4b20-af8f-e964dd1512df.png)
+
+Step 3: Run the [Jupyter notebook](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/notebook/data_ingestion.ipynb)
 - Please note to input your own config into the variables into the notebook.
 
 Step 4: Check the output
@@ -59,5 +65,6 @@ output_dir/partition=B/
 ```
 
 From the Databricks File System (`DBFS`), we should see this:
-[pic]
+
+![Screen Shot 2022-03-10 at 10 21 28 AM](https://user-images.githubusercontent.com/70767722/157693694-c96a6ae5-6dfc-45ee-97f4-17e049126b74.png)
 
