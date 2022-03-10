@@ -15,26 +15,26 @@ As a data engineer, you are asked to build a data pipeline that produces a datas
 The goal of this project is to build an end-to-end data pipeline to ingest and process daily stock market data from multiple stock exchanges. The pipeline should maintain the source data in a structured format, organized by date. It also needs to produce analytical results that support business analysis.
 
 # Objectives:
-● Create a high-level architecture and data flow before starting your development work.
-● Learn to parse CSV and JSON files
-● Create a Spark DataFrame with defined schema
-● Persist the Spark DataFrame into file system using partitioning
+- Create a high-level architecture and data flow before starting your development work.
+- Learn to parse CSV and JSON files
+- Create a Spark DataFrame with defined schema
+- Persist the Spark DataFrame into file system using partitioning
 
 # Prerequisites
-● Python: basics, string manipulation, control flow, exception handling, JSON parsing
-● PySpark: RDD from text file, custom DataFrames, write with partitions, Parquet
-● Azure Databricks setup
-● Azure Blob Storage setup
+- Python: basics, string manipulation, control flow, exception handling, JSON parsing
+- PySpark: RDD from text file, custom DataFrames, write with partitions, Parquet
+- Azure Databricks setup
+- Azure Blob Storage setup
 
 Originally I wanted to use HDInsight cluster and mount with Blob Storage from Azure and then I realized it's more efficient using Databricks cluster and mount with Blob Storage.
 
 # Data Source
 The source data used in this project is randomly generated stock exchange data.
-● Trades: records that indicate transactions of stock shares between broker-dealers. See trade data below.
+- Trades: records that indicate transactions of stock shares between broker-dealers. See trade data below.
 [pic]
 
 
-● Quotes: records of updates best bid/ask price for a stock symbol on a certain exchange. See quote data below.
+- Quotes: records of updates best bid/ask price for a stock symbol on a certain exchange. See quote data below.
 [pic]
 
 ## Diagram of the data flow
