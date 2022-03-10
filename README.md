@@ -45,18 +45,18 @@ The source data used in this project is randomly generated stock exchange data.
 ## Diagram of the data flow
 ![Screen Shot 2022-03-10 at 10 21 47 AM](https://user-images.githubusercontent.com/70767722/157693765-9709acf6-424f-4b2a-bef5-18b6cc4c45b9.png)
 
-Step 1: Data Source
+## Step 1: Data Source
 - First, we upload data from folder [data](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/tree/master/data) using [AzCopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?toc=/azure/storage/blobs/toc.json) 
 - Creates a container then upload the CSV and JSON files using [upload_files.sh](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/upload_files.sh)
 
-Step 2: Create Azure Databricks cluster
+## Step 2: Create Azure Databricks cluster
 
 ![Screen Shot 2022-03-10 at 10 12 22 AM](https://user-images.githubusercontent.com/70767722/157693600-46bbe945-7560-4b20-af8f-e964dd1512df.png)
 
-Step 3: Run the [Jupyter notebook](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/notebook/data_ingestion.ipynb)
+## Step 3: Run the [Jupyter notebook](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/notebook/data_ingestion.ipynb)
 - Please note to input your own config into the variables into the notebook.
 
-Step 4: Check the output
+## Step 4: Check the output
 - Since we use the code `data.write.partitionBy("partition").mode("overwrite").parquet("output_dir")` , we should expect the processed data stored in this data structure:
 ```
 output_dir/partition=T/ 
