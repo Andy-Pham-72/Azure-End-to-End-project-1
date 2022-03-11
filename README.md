@@ -56,7 +56,12 @@ The source data used in this project is randomly generated stock exchange data.
 ## Step 3: Run the [Jupyter notebook](https://github.com/Andy-Pham-72/Azure-End-to-End-project-1/blob/master/notebook/data_ingestion.ipynb)
 - Please note to input your own config into the variables into the notebook.
 
-## Step 4: Check the output
+## Step 4: Check the output dataframe
+
+![Screen Shot 2022-03-10 at 6 27 38 PM](https://user-images.githubusercontent.com/70767722/157772480-be572e42-63be-4db3-a8f2-601409154fba.png)
+
+
+## Step 5: Check the output directory
 - Since we use the code `data.write.partitionBy("partition").mode("overwrite").parquet("output_dir")` , we should expect the processed data stored in this data structure:
 ```
 output_dir/partition=T/ 
