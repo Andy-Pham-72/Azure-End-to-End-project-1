@@ -1,5 +1,5 @@
 import datetime
-from config import config_azure
+from configdirectory import ConfigDirectory
 
 class Reporter():
     """
@@ -10,9 +10,8 @@ class Reporter():
     The report() method will be used to read parquet files and run some queries for the report
     """
 
-    def __init__(self, spark, config):
+    def __init__(self, spark):
         self.spark = spark
-        self.config = config
 
     def report(self, spark, trade_date, eod_dir):
         """
@@ -31,14 +30,14 @@ class Reporter():
         prev_date = prev_date.strftime("%Y-%m-%d")
 
         # get azure config
-        params_azure = config_azure()
+        params_azure = ConfigDirectory("azureconfig.ini", "azure_storage_config").config_directory()
 
         # mount the blob storage
         mount_dir = "/mnt/data"
         dbutils.fs.mount(
-                        source = "wasbs://%s@%s.blob.core.windows.net" %(params_azure[0], params_azure[1]),
+                        source = "wasbs://%s@%s.blob.core.windows.net" %(params_azure["container_name"], params_azure["storage_name"]),
                         mount_point = mount_dir,
-                        extra_configs = {"fs.azure.account.key.%s.blob.core.windows.net" % (params_azure[1]): params_azure[2] })
+                        extra_configs = {"fs.azure.account.key.%s.blob.core.windows.net" % (params_azure["storage_name"]): params_azure["key"] })
 
         # read the desired trade 
         df = spark.read.parquet("{}trade/trade_dt={}".format(eod_dir, trade_date))\

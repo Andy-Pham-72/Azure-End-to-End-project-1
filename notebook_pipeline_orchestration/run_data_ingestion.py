@@ -1,6 +1,6 @@
 import logging
 from tracker import Tracker
-from config import config_logging
+from configdirectory import ConfigDirectory
 
 def track_data_ingestion(config):
     """
@@ -11,17 +11,17 @@ def track_data_ingestion(config):
     :return: 
     """
 
-    tracker = Tracker("Data_Ingestion", config)
+    tracker = Tracker("data_ingestion", config)
     job_id = tracker.assign_job_id()
     connection = tracker.get_db_connection()
     connection
     try:
         # In addition, create methods to assign job_id and get db connection.
         tracker.data_ingestion()
-        tracker.update_job_status("Successful Data Ingestion.", job_id, connection)
+        tracker.update_job_status("successful", job_id, connection)
     except Exception as e:
         print(e)
-        tracker.update_job_status("Failed Data Ingestion.", job_id, connection)
+        tracker.update_job_status("failed", job_id, connection)
     return
 
 
@@ -30,10 +30,10 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__) 
 
     # Create config file
-    my_config = config_logging()
+    my_config = ConfigDirectory("logconfig.ini", "log_name").config_directory()
 
     # Obtain log file from config file
-    log_file = my_config[0]
+    log_file = my_config["log_name"]
 
     # Write data to logfile
     logging.basicConfig(

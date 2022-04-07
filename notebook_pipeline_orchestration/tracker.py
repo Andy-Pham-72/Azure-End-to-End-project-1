@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 from random import randint
 import psycopg2
-from config import config_postgres, config_azure
+from configdirectory import ConfigDirectory
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DecimalType
 
@@ -24,10 +24,10 @@ class Tracker:
         connection = None
         try:
             # read connection to the PostgreSQL database server
-            params_postgres = config_postgres()
+            params_postgres = ConfigDirectory("database.ini", "postgresql").config_directory()
 
             # connect to the PostgreSQL server
-            connection = psycopg2.connect(**params_postgres)
+            connection = psycopg2.connect(params_postgres)
 
             return connection
         except (Exception, psycopg2.DatabaseError) as error:
@@ -43,7 +43,7 @@ class Tracker:
         sc = spark.sparkContext
 
         # get azure config
-        params_azure = config_azure()
+        params_azure = ConfigDirectory("azureconfig.ini", "azure_storage_config").config_directory()
 
         # create common event schema
         commonEventSchema = StructType([
@@ -166,13 +166,13 @@ class Tracker:
         json_dir_2 = "/data/json/2020-08-06/NASDAQ/part-00000-092ec1db-39ab-4079-9580-f7c7b516a283-c000.txt"
 
         # Raw text files
-        raw_csv_1 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure[0], params_azure[1], csv_dir_1))
+        raw_csv_1 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure["container_name"], params_azure["storage_name"], csv_dir_1))
 
-        raw_csv_2 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure[0], params_azure[1], csv_dir_2))
+        raw_csv_2 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure["container_name"], params_azure["storage_name"], csv_dir_2))
 
-        raw_json_1 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure[0], params_azure[1], json_dir_1))
+        raw_json_1 = sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure["container_name"], params_azure["storage_name"], json_dir_1))
 
-        raw_json_2 =  sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure[0], params_azure[1], json_dir_2))
+        raw_json_2 =  sc.textFile( "wasbs://%s@%s.blob.core.windows.net%s" %( params_azure["container_name"], params_azure["storage_name"], json_dir_2))
 
         # Parsed files
         parsed_csv1 = raw_csv_1.map(lambda line: parse_csv(line))
@@ -197,7 +197,7 @@ class Tracker:
 
         # Stop Spark
         sc.stop()
-    
+
     def assign_job_id(self):
         """
         This method creates a combination of jobname, 5 digits string and datetime object to automatically
