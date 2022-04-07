@@ -1,7 +1,7 @@
 import sys
 import logging
 from reporter import Reporter
-from config import config_logging
+from configdirectory import ConfigDirectory
 from pyspark.sql import SparkSession
 
 
@@ -19,8 +19,8 @@ def run_reporter_etl(config):
     :param config: Config file object .
     :return:
     """
-    trade_date = config.get("production", "processing_date")  # TODO: Need to create section for trade_date later on.
-    reporter = Reporter(spark, config)
+    trade_date = config  # TODO: Need to create section for trade_date later on.
+    reporter = Reporter(spark)
     try:
         reporter.report(spark, trade_date, eod_dir)
     except Exception as e:
@@ -33,10 +33,10 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__) 
 
     # Create config file
-    my_config = config_logging()
+    my_config = ConfigDirectory("dateconfig.ini", "production").config_directory()["processing_date"]
 
     # Obtain log file from config file
-    log_file = my_config[0]
+    log_file = ConfigDirectory("logconfig.ini", "log_file").config_directory()["log_name"]
 
     # Write data to logfile
     logging.basicConfig(
